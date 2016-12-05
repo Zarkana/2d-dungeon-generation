@@ -17,7 +17,7 @@ public class TutorialInfo : MonoBehaviour
 	public GameObject overlay;
 
 	// store a reference to the audio listener in the scene, allowing for muting of the scene during the overlay
-	public AudioListener mainListener;
+	//public AudioListener mainListener;
 
 	// store a reference to the UI toggle which allows users to switch it off for future plays
 	public Toggle showAtStartToggle;
@@ -66,7 +66,7 @@ public class TutorialInfo : MonoBehaviour
 	public void ShowLaunchScreen()
 	{
 		Time.timeScale = 0f;
-		mainListener.enabled = false;
+		//mainListener.enabled = false;
 		overlay.SetActive (true);
 	}
 
@@ -81,7 +81,7 @@ public class TutorialInfo : MonoBehaviour
 	public void StartGame()
 	{		
 		overlay.SetActive (false);
-		mainListener.enabled = true;
+		//mainListener.enabled = true;
 		Time.timeScale = 1f;
 	}
 
