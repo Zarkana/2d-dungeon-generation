@@ -34,11 +34,40 @@ public class Spawner : MonoBehaviour {
       enemiesToPlace--;
     }
 
-
   }
 	
-	// Update is called once per frame
-	void Update () {
 
+  //Entities, Variance, Area
+  private void Spray()
+  {
+    //TODO
   }
+
+  private void Line()
+  {
+    //TODO
+  }
+
+  private void Rectangle()
+  {
+    //TODO
+  }
+
+  private void Sphere()
+  {
+    //TODO
+  }
+
+  //
+  private void joinArea()
+  {
+    //TODO
+  }
+
+  private void isSameTile()
+  {
+    //TODO
+  }
+
+
 }

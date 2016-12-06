@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Completed\2D Generation\Area.cs" />
     <Compile Include="Assets\Completed\2D Generation\BoardCreator.cs" />
     <Compile Include="Assets\Completed\2D Generation\Corridor.cs" />
     <Compile Include="Assets\Completed\2D Generation\IntRange.cs" />
