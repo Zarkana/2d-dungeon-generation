@@ -8,11 +8,11 @@ public class Spawner : MonoBehaviour {
     Enemy
   }
 
-  public Room[] floorTiles;
-  public Corridor[] wallTiles;
-  public string[] mystr;
+  public Room[] rooms;
+  public Corridor[] corridors;
 
-  public int numEntities = 10; 
+  private int numEntities;
+
   public GameObject[] entities; //The sprites of the enemies
   private BoardCreator boardCreator;
   public static Spawner spawner = null;
@@ -23,7 +23,18 @@ public class Spawner : MonoBehaviour {
     GameObject gameManager = GameObject.Find("GameManager(Clone)");
     boardCreator = gameManager.GetComponent<BoardCreator>();
     
-    floorTiles = boardCreator.GetRooms();
+    rooms = boardCreator.GetRooms();
+    corridors = boardCreator.GetCorridors();
+
+    int enemiesToPlace = entities.Length - 1; //Store the number of entities to be placed in enemiesToPlace
+    for (int i = 1; (i < rooms.Length) && (enemiesToPlace >= 1); i++)//As long as there are rooms and there are enemies to place
+    {      
+      Vector3 enemyPos = new Vector3(rooms[i].xPos, rooms[i].yPos, 0);
+      Instantiate(entities[enemiesToPlace], enemyPos, Quaternion.identity);
+      enemiesToPlace--;
+    }
+
+
   }
 	
 	// Update is called once per frame

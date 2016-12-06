@@ -67,10 +67,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c47f8058a575e3046a8c539d0fc2beb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorTiles: []
-  mystr: []
-  numEntities: 10
-  entities: []
+  rooms: []
+  corridors: []
+  entities:
+  - {fileID: 195068, guid: ebfba08a213d34c46ba2b1947aeaea83, type: 2}
+  - {fileID: 161064, guid: 089a2f2c322ea40f9afdfaba0550c6d3, type: 2}
+  - {fileID: 195068, guid: ebfba08a213d34c46ba2b1947aeaea83, type: 2}
+  - {fileID: 161064, guid: 089a2f2c322ea40f9afdfaba0550c6d3, type: 2}
+  - {fileID: 195068, guid: ebfba08a213d34c46ba2b1947aeaea83, type: 2}
+  - {fileID: 161064, guid: 089a2f2c322ea40f9afdfaba0550c6d3, type: 2}
+  - {fileID: 195068, guid: ebfba08a213d34c46ba2b1947aeaea83, type: 2}
+  - {fileID: 161064, guid: 089a2f2c322ea40f9afdfaba0550c6d3, type: 2}
 --- !u!114 &114000011324706962
 MonoBehaviour:
   m_ObjectHideFlags: 1

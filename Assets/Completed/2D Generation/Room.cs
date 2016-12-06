@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public class Room : System.Object
+public class Room : Object
 {
   public int xPos;                      // The x coordinate of the lower left tile of the room.
   public int yPos;                      // The y coordinate of the lower left tile of the room.
