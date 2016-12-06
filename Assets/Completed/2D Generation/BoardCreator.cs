@@ -253,4 +253,15 @@ public class BoardCreator : MonoBehaviour
     // Set the tile's parent to the board holder.
     tileInstance.transform.parent = boardHolder.transform;
   }
+
+  public Room[] GetRooms()
+  {
+    return rooms;
+  }
+
+  public Corridor[] GetCorridors()
+  {
+    return corridors;
+  }
+
 }

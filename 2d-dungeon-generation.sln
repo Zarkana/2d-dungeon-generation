@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2d-dungeon-generation", "2d-dungeon-generation.csproj", "{6A2F500C-B63E-16AB-C998-672C9CCF3823}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2d-dungeon-generation.Editor", "2d-dungeon-generation.Editor.csproj", "{CBB6E888-F55E-1FE7-2C3D-E55F6627509B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A2F500C-B63E-16AB-C998-672C9CCF3823}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A2F500C-B63E-16AB-C998-672C9CCF3823}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A2F500C-B63E-16AB-C998-672C9CCF3823}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A2F500C-B63E-16AB-C998-672C9CCF3823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB6E888-F55E-1FE7-2C3D-E55F6627509B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB6E888-F55E-1FE7-2C3D-E55F6627509B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB6E888-F55E-1FE7-2C3D-E55F6627509B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB6E888-F55E-1FE7-2C3D-E55F6627509B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

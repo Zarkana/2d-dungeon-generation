@@ -12,7 +12,8 @@ namespace Completed
 		public float turnDelay = 0.1f;							//Delay between each Player turn.
 		public int playerFoodPoints = 100;						//Starting value for Player food points.
 		public static GameManager instance = null;				//Static instance of GameManager which allows it to be accessed by any other script.
-		[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
+    public static Spawner spawner = null;
+		//[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
 		
 		
 		private Text levelText;									//Text to display current level number.
@@ -21,9 +22,8 @@ namespace Completed
 		private int level = 1;									//Current level number, expressed in game as "Day 1".
 		private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
 		private bool enemiesMoving;								//Boolean to check if enemies are moving.
-		private bool doingSetup = true;							//Boolean to check if we're setting up board, prevent Player from moving during setup.
-		
-		
+		private bool doingSetup = true;							//Boolean to check if we're setting up board, prevent Player from moving during setup.		
+    		
 		
 		//Awake is always called before any Start functions
 		void Awake()
@@ -106,13 +106,13 @@ namespace Completed
 		void Update()
 		{
 			//Check that playersTurn or enemiesMoving or doingSetup are not currently true.
-			if(playersTurn || enemiesMoving || doingSetup)
+			//if(playersTurn || enemiesMoving || doingSetup)
 				
 				//If any of these are true, return and do not start MoveEnemies.
-				return;
+				//return;
 			
 			//Start moving enemies.
-			StartCoroutine (MoveEnemies ());
+			//StartCoroutine (MoveEnemies ());
 		}
 		
 		//Call this to add the passed in Enemy to the List of Enemy objects.
@@ -153,16 +153,16 @@ namespace Completed
 			}
 			
 			//Loop through List of Enemy objects.
-			for (int i = 0; i < enemies.Count; i++)
-			{
+			//for (int i = 0; i < enemies.Count; i++)
+			//{
 				//Call the MoveEnemy function of Enemy at index i in the enemies List.
-				enemies[i].MoveEnemy ();
+				//enemies[i].MoveEnemy ();
 				
 				//Wait for Enemy's moveTime before moving next Enemy, 
-				yield return new WaitForSeconds(enemies[i].moveTime);
-			}
+				//yield return new WaitForSeconds(enemies[i].moveTime);
+			//}
 			//Once Enemies are done moving, set playersTurn to true so player can move.
-			playersTurn = true;
+			//playersTurn = true;
 			
 			//Enemies are done moving, set enemiesMoving to false.
 			enemiesMoving = false;
