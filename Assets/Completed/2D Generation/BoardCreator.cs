@@ -94,7 +94,8 @@ public class BoardCreator : MonoBehaviour
         corridors[i].SetupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, columns, rows, false);
       }
 
-      if (i == rooms.Length * .5f)
+      //Place the player in the middle room
+      if (i == System.Math.Floor(rooms.Length * .5f))
       {
         Vector3 playerPos = new Vector3(rooms[i].xPos, rooms[i].yPos, 0);
         Instantiate(player, playerPos, Quaternion.identity);
