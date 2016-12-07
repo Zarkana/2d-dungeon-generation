@@ -26,6 +26,12 @@ public class Spawner : MonoBehaviour {
     rooms = boardCreator.GetRooms();
     corridors = boardCreator.GetCorridors();
 
+
+    //TODO: Almost there, currently does not work as expected
+    float height = rooms[0].getHeight();
+    float width = rooms[0].getWidth();
+    //Tile myTile = rooms[0].tiles[0];
+
     int enemiesToPlace = entities.Length - 1; //Store the number of entities to be placed in enemiesToPlace
     for (int i = 1; (i < rooms.Length) && (enemiesToPlace >= 1); i++)//As long as there are rooms and there are enemies to place
     {      

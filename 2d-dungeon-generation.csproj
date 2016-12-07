@@ -69,6 +69,7 @@
     <Compile Include="Assets\Completed\2D Generation\IntRange.cs" />
     <Compile Include="Assets\Completed\2D Generation\Room.cs" />
     <Compile Include="Assets\Completed\2D Generation\Spawner.cs" />
+    <Compile Include="Assets\Completed\2D Generation\Tile.cs" />
     <Compile Include="Assets\Completed\Scripts\BoardManager.cs" />
     <Compile Include="Assets\Completed\Scripts\Enemy.cs" />
     <Compile Include="Assets\Completed\Scripts\GameManager.cs" />

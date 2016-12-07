@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public class Room : Object
+public class Room : Area
 {
   public int xPos;                      // The x coordinate of the lower left tile of the room.
   public int yPos;                      // The y coordinate of the lower left tile of the room.
@@ -20,6 +20,18 @@ public class Room : Object
     // Set the x and y coordinates so the room is roughly in the middle of the board.
     xPos = Mathf.RoundToInt(columns / 2f - roomWidth / 2f);
     yPos = Mathf.RoundToInt(rows / 2f - roomHeight / 2f);
+
+    //Attempt to fill tiles, may need to be done more intelligently in future
+    //TODO: Almost there
+    for (float x = xPos; x <= roomWidth + xPos - 1; x++)
+    {
+      for (float y = yPos; y <= roomHeight + yPos - 1; y++)
+      {
+        Tile thisTile = new Tile();
+        thisTile.vectorTile = new Vector3(x, y, 0f);
+        tiles.Add(thisTile);        
+      }
+    }
   }
 
 
