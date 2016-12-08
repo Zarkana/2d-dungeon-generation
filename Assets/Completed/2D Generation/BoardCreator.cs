@@ -24,13 +24,14 @@ public class BoardCreator : MonoBehaviour
   private TileType[][] tiles;                               // A jagged array of tile types representing the board, like a grid.
   private Room[] rooms;                                     // All the rooms that are created for this board.
   private Corridor[] corridors;                             // All the corridors that connect the rooms.
-  private GameObject boardHolder;                           // GameObject that acts as a container for all other tiles.
+  private GameObject cellHolder;                           // GameObject that acts as a container for all other tiles.
 
 
   private void Start()
   {
     // Create the board holder.
-    boardHolder = new GameObject("BoardHolder");
+    cellHolder = new GameObject("CellHolder");
+    //TODO: Merge boardcreator with Cell
 
     SetupTilesArray();
 
@@ -113,12 +114,12 @@ public class BoardCreator : MonoBehaviour
       Room currentRoom = rooms[i];
 
       // ... and for each room go through it's width.
-      for (int j = 0; j < currentRoom.roomWidth; j++)
+      for (int j = 0; j < currentRoom.maxWidth; j++)
       {
         int xCoord = currentRoom.xPos + j;
 
         // For each horizontal tile, go up vertically through the room's height.
-        for (int k = 0; k < currentRoom.roomHeight; k++)
+        for (int k = 0; k < currentRoom.maxHeight; k++)
         {
           int yCoord = currentRoom.yPos + k;
 
@@ -252,7 +253,7 @@ public class BoardCreator : MonoBehaviour
     GameObject tileInstance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
 
     // Set the tile's parent to the board holder.
-    tileInstance.transform.parent = boardHolder.transform;
+    tileInstance.transform.parent = cellHolder.transform;
   }
 
   public Room[] GetRooms()

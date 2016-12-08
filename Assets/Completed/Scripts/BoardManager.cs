@@ -37,7 +37,7 @@ namespace Completed
 		public GameObject[] enemyTiles;									//Array of enemy prefabs.
 		public GameObject[] outerWallTiles;								//Array of outer tile prefabs.
 		
-		private Transform boardHolder;									//A variable to store a reference to the transform of our Board object.
+		private Transform cell;									//A variable to store a reference to the transform of our Board object.
 		//private List <Vector3> gridPositions = new List <Vector3> (); //A list of possible locations to place tiles.
     private Area gridPositions = new Area();
 
@@ -65,8 +65,8 @@ namespace Completed
 		//Sets up the outer walls and floor (background) of the game board.
 		void BoardSetup ()
 		{
-			//Instantiate Board and set boardHolder to its transform.
-			boardHolder = new GameObject ("Board").transform;
+			//Instantiate Board and set cell to its transform.
+			cell = new GameObject ("Board").transform;
 			
 			//Loop along x axis, starting from -1 (to fill corner) with floor or outerwall edge tiles.
 			for(int x = -1; x < columns + 1; x++)
@@ -85,8 +85,8 @@ namespace Completed
 					GameObject instance =
 						Instantiate (toInstantiate, new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
 					
-					//Set the parent of our newly instantiated object instance to boardHolder, this is just organizational to avoid cluttering hierarchy.
-					instance.transform.SetParent (boardHolder);
+					//Set the parent of our newly instantiated object instance to cell, this is just organizational to avoid cluttering hierarchy.
+					instance.transform.SetParent (cell);
 				}
 			}
 		}

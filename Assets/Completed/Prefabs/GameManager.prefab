@@ -45,6 +45,7 @@ MonoBehaviour:
   levelStartDelay: 2
   turnDelay: 0.1
   playerFoodPoints: 100
+  currentCell: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -95,11 +96,11 @@ MonoBehaviour:
     m_Min: 10
     m_Max: 20
   roomWidth:
-    m_Min: 10
-    m_Max: 16
+    m_Min: 5
+    m_Max: 5
   roomHeight:
     m_Min: 5
-    m_Max: 30
+    m_Max: 10
   corridorLength:
     m_Min: 4
     m_Max: 30

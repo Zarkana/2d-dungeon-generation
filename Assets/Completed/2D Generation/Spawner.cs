@@ -19,23 +19,21 @@ public class Spawner : MonoBehaviour {
 
   // Use this for initialization
   void Start () {
-    //GameObject BoardHolder = GameObject.Find("BoardHolder");
+    //GameObject cellHolder = GameObject.Find("CellHolder");
     GameObject gameManager = GameObject.Find("GameManager(Clone)");
     boardCreator = gameManager.GetComponent<BoardCreator>();
     
     rooms = boardCreator.GetRooms();
     corridors = boardCreator.GetCorridors();
 
-
-    //TODO: Almost there, currently does not work as expected
-    float height = rooms[0].getHeight();
-    float width = rooms[0].getWidth();
-    //Tile myTile = rooms[0].tiles[0];
+    float height = rooms[0].GetHeight();
+    float width = rooms[0].GetWidth();
 
     int enemiesToPlace = entities.Length - 1; //Store the number of entities to be placed in enemiesToPlace
-    for (int i = 1; (i < rooms.Length) && (enemiesToPlace >= 1); i++)//As long as there are rooms and there are enemies to place
-    {      
-      Vector3 enemyPos = new Vector3(rooms[i].xPos, rooms[i].yPos, 0);
+    for (int i = 0; (i < rooms.Length -1) && (enemiesToPlace >= 1); i++)//As long as there are rooms and there are enemies to place
+    {
+      //Vector3 enemyPos = new Vector3(rooms[i].xPos, rooms[i].yPos, 0);
+      Vector3 enemyPos = rooms[i].GetCenterTile().vectorTile;
       Instantiate(entities[enemiesToPlace], enemyPos, Quaternion.identity);
       enemiesToPlace--;
     }
