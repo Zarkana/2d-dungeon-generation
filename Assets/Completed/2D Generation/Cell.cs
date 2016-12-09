@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class BoardCreator : MonoBehaviour
+public class Cell : Area
 {
   // The type of tile that will be laid in a specific position.
   public enum TileType
@@ -9,9 +9,9 @@ public class BoardCreator : MonoBehaviour
     Wall, Floor,
   }
 
+  //public int columns = 100;                                 // The number of columns on the board (how wide it will be).
+  //public int rows = 100;                                    // The number of rows on the board (how tall it will be).
 
-  public int columns = 100;                                 // The number of columns on the board (how wide it will be).
-  public int rows = 100;                                    // The number of rows on the board (how tall it will be).
   public IntRange numRooms = new IntRange(15, 20);         // The range of the number of rooms there can be.
   public IntRange roomWidth = new IntRange(3, 10);         // The range of widths rooms can have.
   public IntRange roomHeight = new IntRange(3, 10);        // The range of heights rooms can have.
@@ -31,7 +31,9 @@ public class BoardCreator : MonoBehaviour
   {
     // Create the board holder.
     cellHolder = new GameObject("CellHolder");
-    //TODO: Merge boardcreator with Cell
+
+    maxWidth = 100; 
+    maxHeight = 100;
 
     SetupTilesArray();
 
@@ -42,19 +44,20 @@ public class BoardCreator : MonoBehaviour
 
     InstantiateTiles();
     InstantiateOuterWalls();
+
   }
 
 
   void SetupTilesArray()
   {
     // Set the tiles jagged array to the correct width.
-    tiles = new TileType[columns][];
+    tiles = new TileType[maxHeight][];
 
     // Go through all the tile arrays...
     for (int i = 0; i < tiles.Length; i++)
     {
       // ... and set each tile array is the correct height.
-      tiles[i] = new TileType[rows];
+      tiles[i] = new TileType[maxWidth];
     }
   }
 
@@ -72,10 +75,10 @@ public class BoardCreator : MonoBehaviour
     corridors[0] = new Corridor();
 
     // Setup the first room, there is no previous corridor so we do not use one.
-    rooms[0].SetupRoom(roomWidth, roomHeight, columns, rows);
+    rooms[0].SetupRoom(roomWidth, roomHeight, maxHeight, maxWidth);
 
     // Setup the first corridor using the first room.
-    corridors[0].SetupCorridor(rooms[0], corridorLength, roomWidth, roomHeight, columns, rows, true);
+    corridors[0].SetupCorridor(rooms[0], corridorLength, roomWidth, roomHeight, maxHeight, maxWidth, true);
 
     for (int i = 1; i < rooms.Length; i++)
     {
@@ -83,7 +86,7 @@ public class BoardCreator : MonoBehaviour
       rooms[i] = new Room();
 
       // Setup the room based on the previous corridor.
-      rooms[i].SetupRoom(roomWidth, roomHeight, columns, rows, corridors[i - 1]);
+      rooms[i].SetupRoom(roomWidth, roomHeight, maxHeight, maxWidth, corridors[i - 1]);
 
       // If we haven't reached the end of the corridors array...
       if (i < corridors.Length)
@@ -92,7 +95,7 @@ public class BoardCreator : MonoBehaviour
         corridors[i] = new Corridor();
 
         // Setup the corridor based on the room that was just created.
-        corridors[i].SetupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, columns, rows, false);
+        corridors[i].SetupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, maxHeight, maxWidth, false);
       }
 
       //Place the player in the middle room
@@ -195,9 +198,9 @@ public class BoardCreator : MonoBehaviour
   {
     // The outer walls are one unit left, right, up and down from the board.
     float leftEdgeX = -1f;
-    float rightEdgeX = columns + 0f;
+    float rightEdgeX = maxHeight + 0f;
     float bottomEdgeY = -1f;
-    float topEdgeY = rows + 0f;
+    float topEdgeY = maxWidth + 0f;
 
     // Instantiate both vertical walls (one on each side).
     InstantiateVerticalOuterWall(leftEdgeX, bottomEdgeY, topEdgeY);

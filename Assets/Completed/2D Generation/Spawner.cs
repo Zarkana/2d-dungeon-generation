@@ -14,17 +14,17 @@ public class Spawner : MonoBehaviour {
   private int numEntities;
 
   public GameObject[] entities; //The sprites of the enemies
-  private BoardCreator boardCreator;
+  private Cell cell;
   public static Spawner spawner = null;
 
   // Use this for initialization
   void Start () {
     //GameObject cellHolder = GameObject.Find("CellHolder");
     GameObject gameManager = GameObject.Find("GameManager(Clone)");
-    boardCreator = gameManager.GetComponent<BoardCreator>();
+    cell = gameManager.GetComponent<Cell>();
     
-    rooms = boardCreator.GetRooms();
-    corridors = boardCreator.GetCorridors();
+    rooms = cell.GetRooms();
+    corridors = cell.GetCorridors();
 
     float height = rooms[0].GetHeight();
     float width = rooms[0].GetWidth();

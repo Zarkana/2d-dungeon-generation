@@ -7,7 +7,7 @@ public enum Direction
 }
 
 [System.Serializable]
-public class Corridor : Object
+public class Corridor : Area
 {
   public int startXPos;         // The x coordinate for the start of the corridor.
   public int startYPos;         // The y coordinate for the start of the corridor.

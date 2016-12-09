@@ -21,6 +21,19 @@ public class Area : MonoBehaviour {
     return addedArea;
   }
 
+  protected void FillTiles()
+  {
+    //TODO: Attempt to fill tiles in a complete square, may need to be done more intelligently in future
+    for (float x = xPos; x <= maxWidth + xPos - 1; x++)
+    {
+      for (float y = yPos; y <= maxHeight + yPos - 1; y++)
+      {
+        Tile thisTile = new Tile();
+        thisTile.vectorTile = new Vector3(x, y, 0f);
+        tiles.Add(thisTile);
+      }
+    }
+  }
 
   //TODO: Consolidate
   public int GetHeight()
