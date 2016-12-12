@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using Completed;
+using System.Collections;
 using UnityEngine;
 
+[System.Serializable]
 public class Cell : Area
 {
   // The type of tile that will be laid in a specific position.
@@ -32,8 +34,11 @@ public class Cell : Area
     // Create the board holder.
     cellHolder = new GameObject("CellHolder");
 
-    maxWidth = 100; 
-    maxHeight = 100;
+    //TODO handle transition later in function
+    GameManager.instance.currentCell = this;
+
+    width = 100; 
+    height = 100;
 
     SetupTilesArray();
 
@@ -51,13 +56,13 @@ public class Cell : Area
   void SetupTilesArray()
   {
     // Set the tiles jagged array to the correct width.
-    tiles = new TileType[maxHeight][];
+    tiles = new TileType[height][];
 
     // Go through all the tile arrays...
     for (int i = 0; i < tiles.Length; i++)
     {
       // ... and set each tile array is the correct height.
-      tiles[i] = new TileType[maxWidth];
+      tiles[i] = new TileType[width];
     }
   }
 
@@ -75,10 +80,10 @@ public class Cell : Area
     corridors[0] = new Corridor();
 
     // Setup the first room, there is no previous corridor so we do not use one.
-    rooms[0].SetupRoom(roomWidth, roomHeight, maxHeight, maxWidth);
+    rooms[0].SetupRoom(roomWidth, roomHeight, height, width);
 
     // Setup the first corridor using the first room.
-    corridors[0].SetupCorridor(rooms[0], corridorLength, roomWidth, roomHeight, maxHeight, maxWidth, true);
+    corridors[0].SetupCorridor(rooms[0], corridorLength, roomWidth, roomHeight, height, width, true);
 
     for (int i = 1; i < rooms.Length; i++)
     {
@@ -86,7 +91,7 @@ public class Cell : Area
       rooms[i] = new Room();
 
       // Setup the room based on the previous corridor.
-      rooms[i].SetupRoom(roomWidth, roomHeight, maxHeight, maxWidth, corridors[i - 1]);
+      rooms[i].SetupRoom(roomWidth, roomHeight, height, width, corridors[i - 1]);
 
       // If we haven't reached the end of the corridors array...
       if (i < corridors.Length)
@@ -95,7 +100,7 @@ public class Cell : Area
         corridors[i] = new Corridor();
 
         // Setup the corridor based on the room that was just created.
-        corridors[i].SetupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, maxHeight, maxWidth, false);
+        corridors[i].SetupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, height, width, false);
       }
 
       //Place the player in the middle room
@@ -117,12 +122,12 @@ public class Cell : Area
       Room currentRoom = rooms[i];
 
       // ... and for each room go through it's width.
-      for (int j = 0; j < currentRoom.maxWidth; j++)
+      for (int j = 0; j < currentRoom.width; j++)
       {
         int xCoord = currentRoom.xPos + j;
 
         // For each horizontal tile, go up vertically through the room's height.
-        for (int k = 0; k < currentRoom.maxHeight; k++)
+        for (int k = 0; k < currentRoom.height; k++)
         {
           int yCoord = currentRoom.yPos + k;
 
@@ -142,7 +147,7 @@ public class Cell : Area
       Corridor currentCorridor = corridors[i];
 
       // and go through it's length.
-      for (int j = 0; j < currentCorridor.corridorLength; j++)
+      for (int j = 0; j < currentCorridor.corridorLength(); j++)
       {
         // Start the coordinates at the start of the corridor.
         int xCoord = currentCorridor.startXPos;
@@ -198,9 +203,9 @@ public class Cell : Area
   {
     // The outer walls are one unit left, right, up and down from the board.
     float leftEdgeX = -1f;
-    float rightEdgeX = maxHeight + 0f;
+    float rightEdgeX = height + 0f;
     float bottomEdgeY = -1f;
-    float topEdgeY = maxWidth + 0f;
+    float topEdgeY = width + 0f;
 
     // Instantiate both vertical walls (one on each side).
     InstantiateVerticalOuterWall(leftEdgeX, bottomEdgeY, topEdgeY);

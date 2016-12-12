@@ -77,6 +77,10 @@
     <Compile Include="Assets\Completed\Scripts\MovingObject.cs" />
     <Compile Include="Assets\Completed\Scripts\Player.cs" />
     <Compile Include="Assets\Completed\Scripts\SoundManager.cs" />
+    <Compile Include="Assets\Completed\Scripts\Utility\Helpers.cs" />
+    <Compile Include="Assets\Completed\Scripts\Utility\MonoBehaviourExtended.cs" />
+    <Compile Include="Assets\Completed\Scripts\Utility\Singleton.cs" />
+    <Compile Include="Assets\Completed\Scripts\Utility\Toolbox.cs" />
     <Compile Include="Assets\Completed\Scripts\Wall.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\TutorialInfo.cs" />
   </ItemGroup>

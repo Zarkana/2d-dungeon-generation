@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Completed;
 
 public class Spawner : MonoBehaviour {
   
@@ -20,7 +21,8 @@ public class Spawner : MonoBehaviour {
   // Use this for initialization
   void Start () {
     //GameObject cellHolder = GameObject.Find("CellHolder");
-    GameObject gameManager = GameObject.Find("GameManager(Clone)");
+    //GameObject gameManager = GameObject.Find("GameManager(Clone)");
+    GameManager gameManager = GameManager.instance;
     cell = gameManager.GetComponent<Cell>();
     
     rooms = cell.GetRooms();
@@ -33,7 +35,7 @@ public class Spawner : MonoBehaviour {
     for (int i = 0; (i < rooms.Length -1) && (enemiesToPlace >= 1); i++)//As long as there are rooms and there are enemies to place
     {
       //Vector3 enemyPos = new Vector3(rooms[i].xPos, rooms[i].yPos, 0);
-      Vector3 enemyPos = rooms[i].GetCenterTile().vectorTile;
+      Vector3 enemyPos = rooms[i].GetCenter().vectorTile;
       Instantiate(entities[enemiesToPlace], enemyPos, Quaternion.identity);
       enemiesToPlace--;
     }

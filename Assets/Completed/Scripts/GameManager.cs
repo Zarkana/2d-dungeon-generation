@@ -12,12 +12,12 @@ namespace Completed
 		public float turnDelay = 0.1f;							//Delay between each Player turn.
 		public int playerFoodPoints = 100;						//Starting value for Player food points.
 		public static GameManager instance = null;				//Static instance of GameManager which allows it to be accessed by any other script.
-    public static Spawner spawner = null;
-    public Cell currentCell = new Cell();
-		//[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
-		
-		
-		private Text levelText;									//Text to display current level number.
+    public Spawner spawner = null;
+    public Cell currentCell = null;
+    //[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
+
+
+    private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
 		private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
 		private int level = 1;									//Current level number, expressed in game as "Day 1".
@@ -29,6 +29,8 @@ namespace Completed
 		//Awake is always called before any Start functions
 		void Awake()
 		{
+      //TODO: Convert the following to use Toolbox
+
 			//Check if instance already exists
 			if (instance == null)
 				
@@ -43,9 +45,22 @@ namespace Completed
 			
 			//Sets this to not be destroyed when reloading scene
 			DontDestroyOnLoad(gameObject);
-			
-			//Assign enemies to a new List of Enemy objects.
-			enemies = new List<Enemy>();
+
+
+      //TODO: Use for the above
+      //Debug.Log(Toolbox.Instance.myGlobalVar);
+
+      //Toolbox toolbox = Toolbox.Instance;
+      //Debug.Log(toolbox.language.current);
+
+      //// (optional) runtime registration of global objects
+      //MyComponent myComponent = Toolbox.Instance.RegisterComponent<MyComponent>();
+      //Debug.Log(myComponent.anotherGlobalVar);
+      //Debug.Log(Toolbox.Instance.GetComponent<myComponent>().anotherGlobalVar); // GetComponent is not recommended
+      //Destroy(myComponent);
+
+      //Assign enemies to a new List of Enemy objects.
+      enemies = new List<Enemy>();
 			
 			//Get a component reference to the attached BoardManager script
 			boardScript = GetComponent<BoardManager>();

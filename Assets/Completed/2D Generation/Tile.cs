@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class Tile : MonoBehaviour {
+  
+  //TODO add enum for tile types
 
   public Vector3 vectorTile;
   //public int xPos;                      // The x coordinate of the tile
