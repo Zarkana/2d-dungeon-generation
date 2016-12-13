@@ -81,92 +81,86 @@ public class Area : MonoBehaviour {
   public int GetBottomCoord() { return yPos;  }
   public int GetLeftCoord() { return xPos; }
 
-  public Direction getDirectionTo(Area destination)
-  {        
+  //Returns the quickest direction 
+  //public Direction getDirectionTo(Area destination)
+  //{            
 
-    if (isUp(destination))
-    {
-      //If destination is thinner and in between origin in both directions
-      if (!isLeft(destination) && !isRight(destination))
-      {
-        return Direction.Up;
-      }
-
-      //If destination is wider and in expands beyond origin in both directions
-      if (!isLeft(destination) && !isRight(destination))
-      {
-        return Direction.Up;
-      }
-
-      if (isLeft(destination))
-      {
-        //destination is up and to the left of origin
-        if (getDistanceLeft(destination) > getDistanceUp(destination))
-          return Direction.Left;
-        else
-          return Direction.Up;
-      }
-      else if (isRight(destination))
-      {
-        //destination is up and to the right of origin
-        if (getDistanceRight(destination) > getDistanceUp(destination))
-          return Direction.Right;
-        else
-          return Direction.Up;
-      }
-      else
-      {
-        //destination is above origin
-
-        
-      }
-    }
-    else if (isDown(destination))//If destination is completely below the origin
-    {
-      //stuff
-      if (isLeft(destination))//If destination is completely to the left of origin
-      {
-        //destination is down and to the left of origin
-
-
-      }
-      else if (isRight(destination))//If destination is completely to the right of origin
-      {
-        //destination is down and to the right of origin
-
-        
-      }
-    }
-    
-    return 0;
-  }
+  //  return 0;
+  //}
   private bool isUp(Area destination) {return destination.GetBottomCoord() > GetTopCoord();}
   private bool isLeft(Area destination) { return destination.GetRightCoord() < GetLeftCoord(); }
   private bool isRight(Area destination) { return destination.GetLeftCoord() > GetRightCoord(); }
   private bool isDown(Area destination) { return destination.GetTopCoord() < GetBottomCoord(); }
 
-  private int getDistanceUp(Area destination) { return destination.GetBottomCoord() - GetTopCoord(); }
-  private int getDistanceLeft(Area destination) { return destination.GetRightCoord() - GetLeftCoord(); }
-  private int getDistanceRight(Area destination) { return  GetRightCoord() - destination.GetLeftCoord(); }
-  private int getDistanceDown(Area destination) { return  GetBottomCoord() - destination.GetTopCoord(); }
+  //private int getDistanceUp(Area destination) { return destination.GetBottomCoord() - GetTopCoord(); }
+  //private int getDistanceLeft(Area destination) { return destination.GetRightCoord() - GetLeftCoord(); }
+  //private int getDistanceRight(Area destination) { return  GetRightCoord() - destination.GetLeftCoord(); }
+  //private int getDistanceDown(Area destination) { return  GetBottomCoord() - destination.GetTopCoord(); }
 
-  private Direction isBetweenLeftRight()
-  {
-    
-  }
+  //private bool isWithinLR(Area destination){ return !isLeft(destination) && !isRight(destination); }
+  //private bool isWithinUD(Area destination) { return !isUp(destination) && !isDown(destination); }
+  //private bool isOutsideLR(Area destination) { return isLeft(destination) && isRight(destination); }
+  //private bool isOutsideUD(Area destination) { return isLeft(destination) && isRight(destination); }
 
   public Direction closestDirection( Area destination)
   {
-    if ()
+    if(isUp(destination))//If up
     {
-
+      if(isLeft(destination) && isRight(destination))
+      {
+        //If destination is to the left and right of origin than no matter what going straight up is the quickest
+        return Direction.Up;
+      }
+      else if (isLeft(destination) && ( GetDistance(destination.GetBottomCenter(), GetLeftCenter()) < GetDistance(destination.GetRightCenter(), GetTopCenter()) ))
+      {        
+        //If going left from origin into the bottom of destination is quicker than going up from origin into the right of destination 
+        return Direction.Left;
+      }
+      else if (isRight(destination) && ( GetDistance(destination.GetBottomCenter(), GetRightCenter()) < GetDistance(destination.GetLeftCenter(), GetTopCenter()) ))
+      {
+        //If going right from origin into the bottom of destination is quicker than going up from origin into the left of destination 
+        return Direction.Right;
+      }
+      else
+      {
+        //It will be quicker to go up and then turn towards the area
+        return Direction.Up;
+      }
     }
-
-
-      return Direction.Down;
+    else if(isDown(destination))
+    {
+      if (isLeft(destination) && isRight(destination))
+      {
+        //If destination is to the left and right of origin than no matter what going straight down is the quickest
+        return Direction.Down;
+      }
+      else if (isLeft(destination) && ( GetDistance(destination.GetTopCenter(), GetLeftCenter()) < GetDistance(destination.GetRightCenter(), GetBottomCenter()) ))
+      {
+          //If going left from origin into the top of destination is quicker than going down from origin into the right of destination 
+          return Direction.Left;
+      }
+      else if (isRight(destination) && ( GetDistance(destination.GetTopCenter(), GetRightCenter()) < GetDistance(destination.GetLeftCenter(), GetBottomCenter()) ))
+      {
+          //If going right from origin into the bottom of destination is quicker than going up from origin into the left of destination 
+          return Direction.Right;
+      }
+      else
+      {
+        //It will be quicker to go up and then turn towards the area
+        return Direction.Down;
+      }
+    }
+    else if(isLeft(destination))
+    {
+      //At this point destination cannot be up or down and so it is only directly left 
+      return Direction.Left;
+    }
+    else
+    {
+      //At this point destination cannot be up or down and so it is only directly right
+      return Direction.Right;
+    }
   }
-
-
 
 
   // Enum to specify the direction is heading.
@@ -175,50 +169,121 @@ public class Area : MonoBehaviour {
     Up, Right, Down, Left,
   }
 
-  public Tile GetCenter()
+  public int GetDistance(Tile tileA, Tile tileB)
   {
-    //Find the average of min and max and then find the center of that
-    int halfWidth = ((width+innerWidth)/2) / 2;
-    int halfHeight = ((height+innerHeight)/2) / 2;
-
-    return GetTile(halfWidth + xPos, halfHeight + yPos);
+    int distanceX = (int)(Math.Abs(tileA.vectorTile.x - tileB.vectorTile.x));
+    int distanceY = (int)(Math.Abs(tileA.vectorTile.y - tileB.vectorTile.y));
+    int totalDistance = distanceX + distanceY;  
+    return totalDistance;
   }
 
   public Tile GetTile(float x, float y)
   {
-    Tile center = tiles.Find(tile => tile.vectorTile.x == x && tile.vectorTile.y == y);
-    return center;
+    return tiles.Find(tile => tile.vectorTile.x == x && tile.vectorTile.y == y);
+  }
+
+  public Tile GetCenter()
+  {
+    return tiles.Find(tile => tile.vectorTile.x == (xPos + width/2) && tile.vectorTile.y == (yPos + height/2));
   }
 
   public Tile GetBottomLeft()
   {
-    Tile bottomLeft = tiles.Find(tile => tile.vectorTile.x == xPos && tile.vectorTile.y == yPos );
-    return bottomLeft;
+    return tiles.Find(tile => tile.vectorTile.x == xPos && tile.vectorTile.y == yPos );     
+  }
+
+  public Tile GetBottomCenter()
+  {
+    return tiles.Find(tile => tile.vectorTile.x == (xPos + width/2) && tile.vectorTile.y == yPos);
   }
 
   public Tile GetBottomRight()
   {
-    Tile bottomRight = tiles.Find(tile => (tile.vectorTile.x + width) == xPos && tile.vectorTile.y == yPos);
-    return bottomRight;
+    return tiles.Find(tile => tile.vectorTile.x == (xPos + width) && tile.vectorTile.y == yPos);
   }
 
-  public Tile GetTopLeft()
+  public Tile GetRightCenter()
   {
-    Tile bottomLeft = tiles.Find(tile => tile.vectorTile.x == xPos && (tile.vectorTile.y + height) == yPos);
-    return bottomLeft;
+    return tiles.Find(tile => tile.vectorTile.x == (xPos + width) && tile.vectorTile.y == (yPos + height/2));
   }
 
   public Tile GetTopRight()
   {
-    Tile bottomRight = tiles.Find(tile => (tile.vectorTile.x + width) == xPos && (tile.vectorTile.y + height) == yPos);
-    return bottomRight;
+    return tiles.Find(tile => tile.vectorTile.x == (xPos + width) && tile.vectorTile.y == (yPos + height));
+  }
+
+  public Tile GetTopCenter()
+  {
+    return tiles.Find(tile => tile.vectorTile.x == (xPos + width / 2) && tile.vectorTile.y == (yPos + height));
+  }
+
+  public Tile GetTopLeft()
+  {
+    return tiles.Find(tile => tile.vectorTile.x == xPos && tile.vectorTile.y == (yPos + height));
+  }
+
+  public Tile GetLeftCenter()
+  {
+    return tiles.Find(tile => tile.vectorTile.x == xPos && tile.vectorTile.y == (yPos + height/2));
+  }
+
+  public bool isOnTopRightDiagonal(Area destination)
+  {
+    Tile topRight = GetTopRight();
+    foreach(Tile tile in destination.tiles)//Look at every tile in the destination area
+    {
+      if (tile.vectorTile.x - topRight.vectorTile.x == tile.vectorTile.y - topRight.vectorTile.y)//If on the topright diagonal
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public bool isOnTopLeftDiagonal(Area destination)
+  {
+    Tile topLeft = GetTopLeft();
+    foreach (Tile tile in destination.tiles)//Look at every tile in the destination area
+    {
+      if (topLeft.vectorTile.x - tile.vectorTile.x == tile.vectorTile.y - topLeft.vectorTile.y)//If on the topleft diagonal
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public bool isOnBottomLeftDiagonal(Area destination)
+  {
+    Tile bottomLeft = GetBottomLeft();
+    foreach (Tile tile in destination.tiles)//Look at every tile in the destination area
+    {
+      if (bottomLeft.vectorTile.x - tile.vectorTile.x == bottomLeft.vectorTile.y - tile.vectorTile.y)//If on the bottomleft diagonal
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public bool isOnBottomRightDiagonal(Area destination)
+  {
+    Tile bottomLeft = GetBottomLeft();
+    foreach (Tile tile in destination.tiles)//Look at every tile in the destination area
+    {
+      if (tile.vectorTile.x - bottomLeft.vectorTile.x == bottomLeft.vectorTile.y - tile.vectorTile.y)//If on the bottomright diagonal
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
   private void RecalculateArea()
   {
-    width = GetMaxWidth();
+    width = GetWidth();
     innerWidth = GetMinWidth();
-    height = GetMaxHeight();
+    height = GetHeight();
     innerHeight = GetMinHeight();
   } 
 
