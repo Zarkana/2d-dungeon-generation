@@ -87,10 +87,10 @@ public class Area : MonoBehaviour {
 
   //  return 0;
   //}
-  private bool isUp(Area destination) {return destination.GetBottomCoord() > GetTopCoord();}
-  private bool isLeft(Area destination) { return destination.GetRightCoord() < GetLeftCoord(); }
-  private bool isRight(Area destination) { return destination.GetLeftCoord() > GetRightCoord(); }
-  private bool isDown(Area destination) { return destination.GetTopCoord() < GetBottomCoord(); }
+  public bool isUp(Area destination) {return destination.GetBottomCoord() > GetTopCoord();}
+  public bool isLeft(Area destination) { return destination.GetRightCoord() < GetLeftCoord(); }
+  public bool isRight(Area destination) { return destination.GetLeftCoord() > GetRightCoord(); }
+  public bool isDown(Area destination) { return destination.GetTopCoord() < GetBottomCoord(); }
 
   //private int getDistanceUp(Area destination) { return destination.GetBottomCoord() - GetTopCoord(); }
   //private int getDistanceLeft(Area destination) { return destination.GetRightCoord() - GetLeftCoord(); }
@@ -102,6 +102,8 @@ public class Area : MonoBehaviour {
   //private bool isOutsideLR(Area destination) { return isLeft(destination) && isRight(destination); }
   //private bool isOutsideUD(Area destination) { return isLeft(destination) && isRight(destination); }
 
+
+  //Finds the closest direction from the middle of an area to the middle of another area
   public Direction closestDirection( Area destination)
   {
     if(isUp(destination))//If up
@@ -282,9 +284,9 @@ public class Area : MonoBehaviour {
   private void RecalculateArea()
   {
     width = GetWidth();
-    innerWidth = GetMinWidth();
+    //innerWidth = GetMinWidth();
     height = GetHeight();
-    innerHeight = GetMinHeight();
-  } 
+    //innerHeight = GetMinHeight();
+  }
 
 }

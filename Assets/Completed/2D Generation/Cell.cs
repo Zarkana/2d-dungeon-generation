@@ -81,17 +81,17 @@ public class Cell : Area
 
     // Setup the first room, there is no previous corridor so we do not use one.
     rooms[0].SetupRoom(roomWidth, roomHeight, height, width);
-
+    
     // Setup the first corridor using the first room.
-    corridors[0].SetupCorridor(rooms[0], corridorLength, roomWidth, roomHeight, height, width, true);
-
+    corridors[0].SetupCorridor(rooms[0], rooms[1], true);
+    
     for (int i = 1; i < rooms.Length; i++)
     {
       // Create a room.
       rooms[i] = new Room();
 
       // Setup the room based on the previous corridor.
-      rooms[i].SetupRoom(roomWidth, roomHeight, height, width, corridors[i - 1]);
+      rooms[i].SetupRoom(roomWidth, roomHeight);
 
       // If we haven't reached the end of the corridors array...
       if (i < corridors.Length)
@@ -100,7 +100,7 @@ public class Cell : Area
         corridors[i] = new Corridor();
 
         // Setup the corridor based on the room that was just created.
-        corridors[i].SetupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, height, width, false);
+        corridors[i].SetupCorridor(rooms[i], rooms[i+1], true);
       }
 
       //Place the player in the middle room
@@ -146,31 +146,73 @@ public class Cell : Area
     {
       Corridor currentCorridor = corridors[i];
 
+      int endX = currentCorridor.endYPos;
+      int endY = currentCorridor.endYPos;
+
+      bool turn = false;//TODO: Need to make much better
+
       // and go through it's length.
-      for (int j = 0; j < currentCorridor.corridorLength(); j++)
+      for (int j = 0; j < currentCorridor.corridorLength; j++)
       {
+
         // Start the coordinates at the start of the corridor.
         int xCoord = currentCorridor.startXPos;
         int yCoord = currentCorridor.startYPos;
 
-        // Depending on the direction, add or subtract from the appropriate
-        // coordinate based on how far through the length the loop is.
-        switch (currentCorridor.direction)
-        {
-          case Direction.North:
-            yCoord += j;
-            break;
-          case Direction.East:
-            xCoord += j;
-            break;
-          case Direction.South:
-            yCoord -= j;
-            break;
-          case Direction.West:
-            xCoord -= j;
-            break;
-        }
+        //Depending on the direction, add or subtract from the appropriate
 
+        //coordinate based on how far through the length the loop is.
+        //implement Directions list to store multiple directions
+        
+        if (!turn)
+        {
+          switch (currentCorridor.directions[0])
+          {
+            case Direction.Up:
+              if (yCoord == endY)
+                turn = true;
+              else
+                yCoord += j;
+              break;
+            case Direction.Right:
+              if (xCoord == endX)
+                turn = true;
+              else
+                xCoord += j;
+              break;
+            case Direction.Down:
+              if (yCoord == endY)
+                turn = true;
+              else
+                yCoord -= j;
+              break;
+            case Direction.Left:
+              if (xCoord == endX)
+                turn = true;
+              else
+                xCoord -= j;
+              break;
+          }
+        }
+        else
+        {
+          switch (currentCorridor.directions[1])
+          {
+            case Direction.Up:
+              yCoord += j;
+              break;
+            case Direction.Right:
+              xCoord += j;
+              break;
+            case Direction.Down:
+              yCoord -= j;
+              break;
+            case Direction.Left:
+              xCoord -= j;
+              break;
+          }
+        }
+        
         // Set the tile at these coordinates to Floor.
         tiles[xCoord][yCoord] = TileType.Floor;
       }
